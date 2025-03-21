@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { unique } from "next/dist/build/utils";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -23,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
-    default: "false",
+    default: false,
   },
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,

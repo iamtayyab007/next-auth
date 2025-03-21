@@ -12,7 +12,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         verifyTokenExpiry: Date.now() + 3600000,
       });
     } else if (emailType === "RESET") {
-      User.findByIdAndUpdate(userId, {
+      await User.findByIdAndUpdate(userId, {
         forgotPasswordToken: hashedToken,
         forgotPasswordTokenExpiry: Date.now() + 3600000,
       });
@@ -47,13 +47,13 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "474ab5d213569c",
-        pass: "********cab9",
+        user: "da31bce9cbd79c",
+        pass: "d9b878b76d691d",
       },
     });
 
     const mailOptions = await transport.sendMail({
-      from: "tk@tk.ai", // sender address
+      from: "tayyabm336@gmail.com", // sender address
       to: email, // list of receivers
       subject:
         emailType === "VERIFY" ? "verify your email" : "Reset your password", // Subject line
