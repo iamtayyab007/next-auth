@@ -1,17 +1,19 @@
-import { connectDB } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
+import User from "@/models/userModel";
+import { connectDB } from "@/dbConfig/dbConfig";
 import { getDataFromToken } from "@/Utils/getDataFromToken";
 
 connectDB();
 
-export async function POST(req: NextRequest) {
-  // extract data from token
-  const userID = await getDataFromToken(req);
-  const user = await User.findOne({ _id: userID }).select("-password  ");
-  if (!user) {
-    return NextResponse.json({ error: "no user found", status: 400 });
+export async function POST(request: NextRequest) {
+  try {
+    const userId = await getDataFromToken(request);
+    const user = await User.findOne({ _id: userId }).select("-password");
+    return NextResponse.json({
+      message: "User found",
+      data: user,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
-
-  return NextResponse.json({ message: "user found", data: user });
 }
